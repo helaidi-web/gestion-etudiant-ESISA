@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Étudiants d'ESISA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-user-graduate"></i> Gestion des Étudiants</h1>
+            <p class="subtitle">Application de gestion complète</p>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <div class="stat-info">
+                    <span class="stat-number" id="totalStudents">0</span>
+                    <span class="stat-label">Total Étudiants</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-user-plus"></i>
+                <div class="stat-info">
+                    <span class="stat-number" id="newThisMonth">0</span>
+                    <span class="stat-label">Ce Mois</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2><i class="fas fa-plus-circle"></i> Ajouter un Étudiant</h2>
+                <form id="studentForm">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" required placeholder="Entrez le nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" id="prenom" required placeholder="Entrez le prénom">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Âge</label>
+                        <input type="number" id="age" required min="15" max="100" placeholder="Entrez l'âge">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required placeholder="exemple@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="filiere">Année d'étude</label>
+                        <select id="filiere" required>
+                            <option value="">Sélectionner l'année</option>
+                            <option value="1ere-annee-licence">1ére année Licence</option>
+                            <option value="2eme-annee-licence">2éme année Licence</option>
+                            <option value="3eme-annee-licence">3éme année Licence</option>
+                            <option value="1ere-annee-master">1ére année Master</option>
+                            <option value="2eme-annee-master">2éme année Master</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                </form>
+            </div>
+
+            <div class="search-section">
+                <h2><i class="fas fa-search"></i> Rechercher</h2>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Rechercher par nom ou email...">
+                    <button class="btn btn-search" onclick="searchStudents()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <h2><i class="fas fa-list"></i> Liste des Étudiants</h2>
+            <div class="table-container">
+                <table id="studentTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Âge</th>
+                            <th>Email</th>
+                            <th>Filière</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                    </tbody>
+                </table>
+            </div>
+            <div id="noDataMessage" class="no-data">
+                <i class="fas fa-folder-open"></i>
+                <p>Aucun étudiant enregistré</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour modifier -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2><i class="fas fa-edit"></i> Modifier l'Étudiant</h2>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label for="editNom">Nom</label>
+                    <input type="text" id="editNom" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPrenom">Prénom</label>
+                    <input type="text" id="editPrenom" required>
+                </div>
+                <div class="form-group">
+                    <label for="editAge">Âge</label>
+                    <input type="number" id="editAge" required min="15" max="100">
+                </div>
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="editFiliere">Filière</label>
+                    <select id="editFiliere" required>
+                        <option value="Informatique">Informatique</option>
+                        <option value="Mathématiques">Mathématiques</option>
+                        <option value="Physique">Physique</option>
+                        <option value="Chimie">Chimie</option>
+                        <option value="Biologie">Biologie</option>
+                        <option value="Économie">Économie</option>
+                        <option value="Droit">Droit</option>
+                        <option value="Médecine">Médecine</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Mettre à jour
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notification" class="notification"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
