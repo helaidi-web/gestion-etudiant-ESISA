@@ -3,7 +3,6 @@
   "devCommand": "next dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "nodeVersion": "20.x",
   "env": [
     "NEXTAUTH_SECRET",
     "NEXTAUTH_URL",
